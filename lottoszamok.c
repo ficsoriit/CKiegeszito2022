@@ -9,10 +9,14 @@ void beolvasLottoSzamot(int szamok[], int szamokDb, int also, int felso);
 bool intervallumVizsgalat(int szamok[], int meret, int also, int felso);
 void kiirEgeszTomb(int tomb[], int elemszam);
 bool ismetlodikE(int szamok[], int meret);
+void rendezNovekvobe(int tomb[], int elemszam);
 
 int main(int argc, char *argv[]) {
     int szamok[SZAMOKDB];
     beolvasLottoSzamot(szamok, SZAMOKDB, ALSO, FELSO);
+    kiirEgeszTomb(szamok, SZAMOKDB);
+    rendezNovekvobe(szamok, SZAMOKDB);
+    printf("A számok növekvő számsorrendben:\n");
     kiirEgeszTomb(szamok, SZAMOKDB);
     return 0;
 }
@@ -87,4 +91,30 @@ void kiirEgeszTomb(int tomb[], int elemszam) {
     }
     printf("\n");
 
+}
+
+void rendezNovekvobe(int tomb[], int elemszam) {
+    int minindex = 0;
+    int tmp;
+    for (int i = 0; i < elemszam-1; i++) {
+        // Megkeressuk a tomb maradek elemei kozul a legkisebbet
+        // Feltetelezzuk, hogy az akt elem a legkisebb,
+        // megjegyezzuk az indexet
+        minindex = i;
+        for (int j = i+1; j <elemszam; j++) {
+            if (tomb[j] < tomb[minindex]) {
+                // Talaltunk egy eddigi minimumnal kisebb elemet
+                // Atirjuk a minindex-et
+                minindex = j;
+            }
+        // Minimum kereses vege
+        // Ha nem az aktualis elem a minimalis, cserélunk
+        if (i != minindex) {
+            tmp = tomb[i];
+            tomb[i] = tomb[minindex];
+            tomb[minindex] = tmp;
+        }
+
+        }
+    }
 }
