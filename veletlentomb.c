@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     int veletlenSzamok[TOMB_ELEMSZAMA];
     //Velelenszam genrator inicializalasa
     //A time(NULL) a rendszeridot adja vissza egesz szankent,
-    //tehat minden futaskor mas az erteke
+  kiirEgeszTomb(szamok, SZAMOKDB);  //tehat minden futaskor mas az erteke
     srand(time(NULL));
 
     for (int i = 0; i < TOMB_ELEMSZAMA; i++) {
