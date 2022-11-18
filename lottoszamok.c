@@ -8,6 +8,7 @@
 void beolvasLottoSzamot(int szamok[], int szamokDb, int also, int felso);
 bool intervallumVizsgalat(int szamok[], int meret, int also, int felso);
 void kiirEgeszTomb(int tomb[], int elemszam);
+bool ismetlodikE(int szamok[], int meret);
 
 int main(int argc, char *argv[]) {
     int szamok[SZAMOKDB];
@@ -23,10 +24,11 @@ void beolvasLottoSzamot(int szamok[], int szamokDb, int also, int felso) {
     char c;
     int beolvasottDb = 0;
     do {
-        printf("Adj meg öt egész számot %d és %d között vesszővel elválasztva! ", also, felso); 
+        printf("Adj meg öt egész számot %d és %d között egyenként külön sorban! ", also, felso); 
+        beolvasottDb = 0;
         for (int i = 0; i < szamokDb; i++) {
             ok = true;
-            if (scanf("%d,", &szam) != 1) {
+            if (scanf("%d", &szam) != 1) {
             // Formai vizsgalat
             printf("Hibás input!\n");
             ok = false;
@@ -41,8 +43,15 @@ void beolvasLottoSzamot(int szamok[], int szamokDb, int also, int felso) {
             ok = false;
          } else {
             // Tartalmi vizsgalat
+            ok = true;
             if (!intervallumVizsgalat(szamok, szamokDb, also, felso)) {
-                ok = false; 
+                printf("Nem esik a %d - %d intervallumba\n", also, felso );
+                ok = false;
+                continue;
+            }
+            if (ismetlodikE(szamok, szamokDb)) {
+                printf("Ismétlődés van!\n");
+                ok = false;
             }
             // Buffer urites!!! --Ovatosságból
             while((c=getchar()) != '\n');
@@ -57,6 +66,17 @@ bool intervallumVizsgalat(int szamok[], int meret, int also, int felso) {
         }
     }
     return true;
+}
+
+bool ismetlodikE(int szamok[], int meret) {
+    for (int i = 0; i < meret-1; i++) {
+        for (int j = i+1; j < meret; j++) {
+            if (szamok[i] ==  szamok[j]) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 void kiirEgeszTomb(int tomb[], int elemszam) {
